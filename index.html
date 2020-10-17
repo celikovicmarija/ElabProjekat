@@ -286,11 +286,81 @@
                         
                     }
                     break;
-                case "put":
+                case "put":{
+                                    
                     //kod za bonus poene
+                    if(tabela=="radio_novosti"){
+
+                        var values = {
+                            "naslov": $("input[name=naslov_novosti_put]").val(),
+                            "tekst":$("#tekst_novosti_put").val(),
+                            "kategorija_id": parseInt($("#kategorija_odabir_put").val())
+                        };
+
+                        console.log(values);
+
+      
+                        $.ajax({
+                            url: "http://localhost:80/rest/api/novosti/"+values.kategorija_id+"/",
+                            method: "PUT",
+                            data:JSON.stringify(values),
+                             success: function(data){
+                                console.log(data)
+                            },
+                            dataType: 'json'
+                                                })
+                        ;
+                    }else{
+
+                        var values ={
+                           "id": parseInt($("input[name=id_kategorije]").val()),
+                           "kategorija" : $("input[name=kategorija_naziv_put]").val()
+                           
+                        }
+                        console.log(values);
+                        $.ajax({
+                            url: "http://localhost:80/rest/api/kategorije/"+values.id+"/",
+                            method: "PUT",
+                            data:JSON.stringify(values),
+                            success: function(data){
+                                console.log(data)
+                            },
+                            dataType:'json'
+                        })
+                        ;
+
+                    }
+                }
                     break;
                 case "delete":
                     //kod za bonus poene
+                    {
+                    if(tabela=="radio_novosti"){
+
+                        var value =parseInt($("input[name=brisanje]").val());
+      
+                        $.ajax({
+                            url: "http://localhost:80/rest/api/novosti/"+value+"/",
+                            method: "DELETE",
+                             success: function(data){
+                                console.log(data)
+                            }
+                         })
+                        ;
+                    }else{
+                        var value =parseInt($("input[name=brisanje]").val());
+                        $.ajax({
+                            url: "http://localhost:80/rest/api/kategorije/"+value+"/",
+                            method: "DELETE",
+                            success: function(data){
+                                console.log(data)
+                            },
+                        })
+                        ;
+
+                    }
+                }
+                    
                     break;
                 default:
                     console.log("default");
